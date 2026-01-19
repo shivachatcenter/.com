@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Form - Shiv Chat Center</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    .item-list { margin: 20px 0; }
+    .item-row { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 12px; 
+      background: #f8f9fa; 
+      border-radius: 8px; 
+      margin-bottom: 10px; 
+      font-size: 1rem;
+    }
+    .item-row button { 
+      background: #ff4444; 
+      color: white; 
+      border: none; 
+      padding: 6px 12px; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      font-size: 0.9rem;
+    }
+    .total-amount { 
+      font-size: 1.6rem; 
+      font-weight: bold; 
+      color: #d2691e; 
+      text-align: center; 
+      margin: 25px 0; 
+      padding: 10px; 
+      background: #fff8e1; 
+      border-radius: 10px;
+    }
+    .add-btn { 
+      background: #4CAF50; 
+      color: white; 
+      border: none; 
+      padding: 12px 25px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      margin-top: 15px; 
+      font-size: 1.1rem; 
+      width: 100%;
+    }
+    .add-btn:disabled { background: #ccc; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="top-header">
+    <div class="container">
+      <div class="header-content">
+        <img src="./logo.png" alt="Shiv Chat Center Logo" class="company-logo">
+        <div class="owner-info">
+          <img src="./owner.jpg" alt="Shivam Kushwah" class="owner-photo">
+          <p>Owner: Shivam Kushwah</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Order Form Section -->
+  <section class="order-form container">
+    <h2>Place Your Order</h2>
+    <p>Select items, add quantity, and place your order. Max 4 items allowed.</p>
+
+    <form action="https://formsubmit.co/shivamkumar878839@gmail.com" method="POST" id="orderForm">
+
+      <!-- Item Selection -->
+      <div class="form-group">
+        <label for="item-select">Select Item</label>
+        <select id="item-select">
+          <option value="">-- Choose Item --</option>
+          <option value="Aloo Chat|20">Aloo Chat - ₹20 (per plate)</option>
+          <option value="Samosa|10">Samosa - ₹10 (per piece)</option>
+          <option value="Pani Puri|20">Pani Puri - ₹20 (6 pieces)</option>
+          <option value="Karela|15">Karela - ₹15 (per piece/plate)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" min="1" value="1">
+      </div>
+
+      <button type="button" class="add-btn" id="add-item-btn" onclick="addItem()">Add Item</button>
+
+      <!-- Selected Items List -->
+      <div class="item-list" id="item-list"></div>
+
+      <!-- Total Amount -->
+      <div class="total-amount" id="total-amount">Total: ₹0.00</div>
+
+      <!-- Hidden field for form submit -->
+      <input type="hidden" name="Items" id="hidden-items">
+
+      <!-- Customer Details -->
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="Name" required placeholder="Enter your full name">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone" name="Phone" required placeholder="Enter your phone number">
+      </div>
+
+      <div class="form-group">
+        <label for="address">Delivery Address *</label>
+        <textarea id="address" name="Address" required rows="4" placeholder="Enter full address with pin code"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Special Instructions (Optional)</label>
+        <textarea id="message" name="Message" rows="3" placeholder="E.g., Extra spicy, No onions..."></textarea>
+      </div>
+
+      <!-- Hidden fields for FormSubmit -->
+      <input type="hidden" name="_subject" value="New Order from Shiv Chat Center">
+      <!-- _next hata diya – ab JS se redirect karenge -->
+      <input type="hidden" name="_captcha" value="false">
+
+      <button type="submit" class="btn-submit" id="submit-btn" disabled>Send Order and Pay Now</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Shiv Chat Center. All Rights Reserved.</p>
+      <p>Village Agara, Tahsil Vijaypur, Dist. Sheopur, Madhya Pradesh 476332</p>
+    </div>
+  </footer>
+
+  <script>
+    let selectedItems = [];
+    const maxItems = 4;
+
+    function addItem() {
+      const select = document.getElementById('item-select');
+      const quantityInput = document.getElementById('quantity');
+      const itemList = document.getElementById('item-list');
+      const submitBtn = document.getElementById('submit-btn');
+
+      if (!select.value) {
+        alert('Please select an item first!');
+        return;
+      }
+
+      if (selectedItems.length >= maxItems) {
+        alert('You can add maximum 4 items only!');
+        return;
+      }
+
+      const quantity = parseInt(quantityInput.value);
+      if (quantity < 1) {
+        alert('Quantity must be at least 1!');
+        return;
+      }
+
+      const parts = select.value.split('|');
+      const itemName = parts[0];
+      const price = parseFloat(parts[1]);
+
+      selectedItems.push({ name: itemName, price: price, quantity: quantity });
+
+      renderItemList();
+      updateTotal();
+
+      submitBtn.disabled = false;
+
+      select.value = '';
+      quantityInput.value = 1;
+    }
+
+    function removeItem(index) {
+      selectedItems.splice(index, 1);
+      renderItemList();
+      updateTotal();
+
+      if (selectedItems.length === 0) {
+        document.getElementById('submit-btn').disabled = true;
+      }
+    }
+
+    function renderItemList() {
+      const itemList = document.getElementById('item-list');
+      itemList.innerHTML = '';
+
+      for (var i = 0; i < selectedItems.length; i++) {
+        var item = selectedItems[i];
+        var itemTotal = (item.price * item.quantity).toFixed(2);
+        var row = document.createElement('div');
+        row.className = 'item-row';
+        row.innerHTML = 
+          '<span>' + item.name + ' x ' + item.quantity + ' - ₹' + itemTotal + '</span>' +
+          '<button onclick="removeItem(' + i + ')">Remove</button>';
+        itemList.appendChild(row);
+      }
+    }
+
+    function updateTotal() {
+      var total = 0;
+      for (var i = 0; i < selectedItems.length; i++) {
+        total += selectedItems[i].price * selectedItems[i].quantity;
+      }
+
+      document.getElementById('total-amount').innerText = 'Total: ₹' + total.toFixed(2);
+
+      var itemsText = '';
+      for (var i = 0; i < selectedItems.length; i++) {
+        var item = selectedItems[i];
+        var itemTotal = (item.price * item.quantity).toFixed(2);
+        itemsText += item.name + ' x ' + item.quantity + ' - ₹' + itemTotal + '\n';
+      }
+      document.getElementById('hidden-items').value = itemsText;
+    }
+
+    // Form submit hone pe payment page pe redirect
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      // FormSubmit email bhejega (submit continue karega)
+      // Wait for email to send, then redirect
+      setTimeout(function() {
+        alert("Order sent successfully! Redirecting to payment options...");
+        window.location.href = 'payment-gateway.html';
+      }, 1500); // 1.5 second wait
+    });
+  </script>
+</body>
+</html>

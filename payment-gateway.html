@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Options - Shiv Chat Center</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    .payment-options {
+      padding: 80px 20px;
+      text-align: center;
+      background: linear-gradient(to bottom, #fff8e1, #ffffff);
+    }
+    .payment-options h2 {
+      font-size: 2.5rem;
+      color: #d2691e;
+      margin-bottom: 20px;
+    }
+    .payment-options p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 40px;
+    }
+    .payment-cards {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .payment-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 380px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+    .payment-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    }
+    .payment-card i {
+      font-size: 5rem;
+      margin-bottom: 25px;
+      color: #25D366;
+    }
+    .payment-card h3 {
+      font-size: 1.8rem;
+      color: #2f4f4f;
+      margin-bottom: 15px;
+    }
+    .payment-card p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 25px;
+    }
+    .payment-card strong {
+      color: #d2691e;
+      font-size: 1.3rem;
+    }
+    .btn-cod, .btn-paytm {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-cod {
+      background: #4CAF50;
+      color: white;
+    }
+    .btn-cod:hover {
+      background: #388E3C;
+      transform: translateY(-3px);
+    }
+    .btn-paytm {
+      background: #00b9f1;
+      color: white;
+    }
+    .btn-paytm:hover {
+      background: #0099cc;
+      transform: translateY(-3px);
+    }
+    .note {
+      margin-top: 50px;
+      font-size: 1.1rem;
+      color: #555;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="top-header">
+    <div class="container">
+      <h1>Payment Options</h1>
+    </div>
+  </header>
+
+  <!-- Payment Section -->
+  <section class="payment-options container">
+    <h2>Choose How to Pay</h2>
+    <p>Thank you for ordering! Select your payment method below. We will confirm your order shortly.</p>
+
+    <div class="payment-cards">
+
+      <!-- Cash on Delivery -->
+      <div class="payment-card">
+        <i class="fas fa-money-bill-wave"></i>
+        <h3>Cash on Delivery (COD)</h3>
+        <p>Pay cash when your order is delivered.<br>No advance payment required.</p>
+        <p><strong>Pay on Delivery</strong></p>
+        <button class="btn-cod" onclick="showThankYou()">Select COD</button>
+      </div>
+
+      <!-- Paytm / UPI -->
+      <div class="payment-card">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>Paytm / UPI</h3>
+        <p>Pay online using Paytm, Google Pay, PhonePe or any UPI app.</p>
+        <p><strong>Paytm / UPI Number:</strong> 7828951832</p>
+        <button class="btn-paytm" onclick="openPaytm()">Pay Now</button>
+      </div>
+
+    </div>
+
+    <p class="note">Your order details have been sent to us. We will contact you soon via call/WhatsApp to confirm delivery time and details.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Shiv Chat Center. All Rights Reserved.</p>
+      <p>Village Agara, Tahsil Vijaypur, Dist. Sheopur, Madhya Pradesh 476332</p>
+    </div>
+  </footer>
+
+  <script>
+    function showThankYou() {
+      // COD select karne pe thank you page pe redirect
+      window.location.href = 'thank-you.html';
+    }
+
+    function openPaytm() {
+      // Paytm payment ke liye alert + number
+      alert("Please open your Paytm / UPI app and send payment to 7828951832.\nMention your order details in the note.\nThank you for choosing online payment! 😊");
+      // Optional: Real Paytm deep link (agar Paytm app installed hai)
+      // window.location.href = 'paytmmp://pay?pa=7828951832@paytm&pn=ShivChatCenter&am=AMOUNT&cu=INR&tn=OrderPayment';
+    }
+  </script>
+</body>
+</html>

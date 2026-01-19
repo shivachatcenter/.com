@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shiv Chat Center - Fresh & Tasty Chaat | Agara, Sheopur MP</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Top Header with Logo & Owner -->
+  <header class="top-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo-section">
+          <img src="./logo.png" alt="Shiv Chat Center Logo" class="company-logo" onerror="this.src='https://via.placeholder.com/250x150/2f4f4f/ffffff?text=Shiv+Chat+Center'">
+          <h1 class="logo-text">Shiv Chat Center</h1>
+        </div>
+        <div class="owner-info">
+          <img src="./owner.jpg" alt="Shivam Kushwah" class="owner-photo" onerror="this.src='https://via.placeholder.com/140x140/2f4f4f/ffffff?text=Shivam'">
+          <p class="owner-name">Owner: Shivam Kushwah</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Shiv Chat Center</h1>
+      <p class="hero-subtitle">Fresh & Delicious Chaat - Aloo Chat, Samosa, Pani Puri & More!</p>
+      <p class="hero-location">Village - Agara, Tahsil - Vijaypur, Dist. - Sheopur (M.P.) 476332</p>
+      <div class="contact-quick">
+        <a href="tel:+917828951832" class="btn-phone"><i class="fas fa-phone"></i> Call: 7828951832</a>
+        <a href="https://wa.link/5fnin3" target="_blank" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Order</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products container">
+    <h2 class="section-title">Our Special Menu</h2>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="./aaluchat.jpg" alt="Aloo Chat" onerror="this.src='https://via.placeholder.com/240x200/f5f5f5/333?text=Aloo+Chat'">
+        </div>
+        <div class="product-details">
+          <h3>Aloo Chat</h3>
+          <div class="price">₹20 <span class="price-text">(per plate)</span></div>
+          <button class="btn-order" onclick="goToOrder('Aloo Chat')">Order Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="./samosa.jpg" alt="Samosa" onerror="this.src='https://via.placeholder.com/240x200/f5f5f5/333?text=Samosa'">
+        </div>
+        <div class="product-details">
+          <h3>Samosa</h3>
+          <div class="price">₹10 <span class="price-text">(per piece)</span></div>
+          <button class="btn-order" onclick="goToOrder('Samosa')">Order Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="./panipuri.jpg" alt="Pani Puri" onerror="this.src='https://via.placeholder.com/240x200/f5f5f5/333?text=Pani+Puri'">
+        </div>
+        <div class="product-details">
+          <h3>Pani Puri</h3>
+          <div class="price">₹20 <span class="price-text">(6 pieces)</span></div>
+          <button class="btn-order" onclick="goToOrder('Pani Puri')">Order Now</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <img src="./karela.jpg" alt="Karela" onerror="this.src='https://via.placeholder.com/240x200/f5f5f5/333?text=Karela'">
+        </div>
+        <div class="product-details">
+          <h3>Karela</h3>
+          <div class="price">₹15 <span class="price-text">(per piece/plate)</span></div>
+          <button class="btn-order" onclick="goToOrder('Karela')">Order Now</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Social & Contact -->
+  <section class="social-contact container">
+    <h2 class="section-title">Connect With Us</h2>
+    <div class="social-content">
+      <div class="social-icons">
+        <a href="https://www.instagram.com/fts.shivam?igsh=dHlmc3hpcjlxcnVu" target="_blank" class="social-link">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://wa.link/5fnin3" target="_blank" class="social-link whatsapp-link">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://youtube.com/@shifit404?si=tE7CYcqBrCtjFbPj" target="_blank" class="social-link">
+          <i class="fab fa-youtube"></i> YouTube
+        </a>
+      </div>
+      <div class="contact-info">
+        <p><i class="fas fa-envelope"></i> Email: shivchatcenter@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> Village Agara, Tahsil Vijaypur, Dist. Sheopur, Madhya Pradesh 476332</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2026 Shiv Chat Center. All Rights Reserved.</p>
+        <p><i class="fas fa-phone"></i> 7828951832 | <i class="fas fa-envelope"></i> shivchatcenter@gmail.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
