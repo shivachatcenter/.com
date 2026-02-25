@@ -546,4 +546,28 @@
         }
 
         function showLocation() {
-            const mapUrl = `https://www.google.com/maps/search/?api=
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shopData.location)}`;
+    
+    showBotMessage(`📍 <b>Hamari Location:</b><br><br>
+    ${shopData.location}
+    <div class="location-info">
+        <a href="${mapUrl}" target="_blank" style="color:#1976d2;text-decoration:none;">
+        🗺️ Google Maps par dekhein
+        </a>
+    </div>`);
+}
+
+function showTiming() {
+    showBotMessage(`⏰ <b>Opening Hours:</b><br><br>${shopData.timing}`);
+}
+
+function showContact() {
+    showBotMessage(`📞 <b>Contact Details:</b><br><br>
+    Phone: ${shopData.phone}<br>
+    Email: ${shopData.email}`);
+}
+
+function openWhatsApp() {
+    const whatsappUrl = `https://wa.me/91${shopData.phone}`;
+    window.open(whatsappUrl, '_blank');
+}
