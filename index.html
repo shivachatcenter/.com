@@ -127,3 +127,108 @@
   <script src="script.js"></script>
 </body>
 </html>
+<!-- AI Chatbot Button -->
+<style>
+.chatbot-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 999;
+}
+.chatbot-box {
+  position: fixed;
+  bottom: 100px;
+  right: 25px;
+  width: 300px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999;
+}
+.chatbot-header {
+  background: #25D366;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+.chatbot-messages {
+  padding: 10px;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+.chatbot-input {
+  display: flex;
+  border-top: 1px solid #eee;
+}
+.chatbot-input input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+}
+.chatbot-input button {
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+}
+</style>
+
+<div class="chatbot-btn" onclick="toggleChatbot()">
+  <i class="fab fa-whatsapp"></i>
+</div>
+
+<div class="chatbot-box" id="chatbot">
+  <div class="chatbot-header">Shiv Chat Assistant</div>
+  <div class="chatbot-messages" id="chatMessages">
+    <p>🙏 Namaste! Menu dekhna hai ya order karna hai?</p>
+  </div>
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" placeholder="Type message...">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script>
+function toggleChatbot() {
+  const box = document.getElementById("chatbot");
+  box.style.display = box.style.display === "flex" ? "none" : "flex";
+}
+
+function sendChat() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.toLowerCase();
+  const chat = document.getElementById("chatMessages");
+
+  if(message.trim() === "") return;
+
+  chat.innerHTML += "<p><b>You:</b> " + input.value + "</p>";
+
+  if(message.includes("menu")) {
+    chat.innerHTML += "<p><b>Bot:</b> Aloo Chat ₹20, Samosa ₹10, Pani Puri ₹20, Karela ₹15</p>";
+  } 
+  else if(message.includes("order")) {
+    window.open("https://wa.link/5fnin3", "_blank");
+  }
+  else {
+    chat.innerHTML += "<p><b>Bot:</b> Kripya 'menu' ya 'order' likhiye 😊</p>";
+  }
+
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
+}
+</script>
