@@ -13,3 +13,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 });
+// WhatsApp icon click -> open chatbot page
+function openWhatsApp() {
+  window.location.href = "chatbot.html";
+}
