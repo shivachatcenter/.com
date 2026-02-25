@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiv Chat Center - WhatsApp AI Chatbot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .chatbot-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            padding: 20px;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .chat-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .chat-header p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+        
+        .shop-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            animation: slideIn 0.3s ease;
+            position: relative;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .bot-message {
+            background: white;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .user-message {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .menu-card {
+            background: #fff8f0;
+            border: 2px solid #FF6B35;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .item-price {
+            color: #FF6B35;
+            font-weight: 700;
+        }
+        
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .quick-btn {
+            background: white;
+            border: 2px solid #FF6B35;
+            color: #FF6B35;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .quick-btn:hover {
+            background: #FF6B35;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input:focus {
+            border-color: #FF6B35;
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+        
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .send-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .typing-indicator.active {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        .order-summary {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .total-price {
+            font-size: 1.2rem;
+            color: #2e7d32;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            animation: float 3s ease-in-out infinite;
+            z-index: 1000;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-btn svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+        
+        .location-info {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 480px) {
+            .chatbot-container {
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .chat-messages {
+                height: calc(100vh - 200px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="floating-btn" onclick="openWhatsApp()" title="Direct WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </div>
+
+    <div class="chatbot-container">
+        <div class="chat-header">
+            <h2>🍽️ Shiv Chat Center</h2>
+            <p>Fresh & Tasty Chaat - Agara, Vijaypur</p>
+            <div class="shop-status">
+                <span class="status-dot"></span>
+                <span>Online | Order Now</span>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+        
+        <div class="chat-input-area">
+            <div class="quick-buttons" id="quickButtons">
+                <button class="quick-btn" onclick="sendQuickMessage('menu')">📋 Menu</button>
+                <button class="quick-btn" onclick="sendQuickMessage('order')">🛒 Order</button>
+                <button class="quick-btn" onclick="sendQuickMessage('location')">📍 Location</button>
+                <button class="quick-btn" onclick="sendQuickMessage('timing')">⏰ Time</button>
+            </div>
+            <div class="input-wrapper" style="margin-top: 10px;">
+                <input type="text" class="chat-input" id="userInput" placeholder="Message..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">
+                    <svg viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Shop Data
+        const shopData = {
+            name: "Shiv Chat Center",
+            phone: "7828951832",
+            location: "Village - Agara, Tahsil - Vijaypur, Dist. - Sheopur (M.P.) 476332",
+            email: "shivchatcenter@gmail.com",
+            menu: [
+                { name: "Aloo Chat", price: 20, emoji: "🥔" },
+                { name: "Samosa", price: 10, emoji: "🥟" },
+                { name: "Pani Puri", price: 20, emoji: "🍘" },
+                { name: "Karela", price: 15, emoji: "🥒" }
+            ],
+            timing: "4:00 PM - 10:00 PM (Daily)"
+        };
+
+        let currentOrder = [];
+        let chatHistory = [];
+
+        // Initialize chat
+        window.onload = function() {
+            setTimeout(() => {
+                showBotMessage(`नमस्ते! 🙏<br><br>Welcome to <b>Shiv Chat Center</b>! <br><br>Main aapki kya madad kar sakta hoon?`);
+            }, 500);
+        };
+
+        function showBotMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot-message';
+            messageDiv.innerHTML = text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showUserMessage(text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user-message';
+            messageDiv.textContent = text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                showUserMessage(text);
+                input.value = '';
+                processUserInput(text.toLowerCase());
+            }
+        }
+
+        function sendQuickMessage(type) {
+            let text = '';
+            switch(type) {
+                case 'menu': text = 'menu'; break;
+                case 'order': text = 'order'; break;
+                case 'location': text = 'location'; break;
+                case 'timing': text = 'timing'; break;
+            }
+            showUserMessage(text.charAt(0).toUpperCase() + text.slice(1));
+            processUserInput(type);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function processUserInput(input) {
+            showTyping();
+            
+            setTimeout(() => {
+                hideTyping();
+                
+                if (input.includes('menu') || input.includes('menu dekhao') || input.includes('kya hai')) {
+                    showMenu();
+                } else if (input.includes('order') || input.includes('place order') || input.includes('buy')) {
+                    showOrderOptions();
+                } else if (input.includes('location') || input.includes('address') || input.includes('kahan hai')) {
+                    showLocation();
+                } else if (input.includes('timing') || input.includes('time') || input.includes('kab khula')) {
+                    showTiming();
+                } else if (input.includes('price') || input.includes('rate') || input.includes('kitne ka')) {
+                    showMenu();
+                } else if (input.includes('contact') || input.includes('phone') || input.includes('number')) {
+                    showContact();
+                } else if (input.includes('alo') || input.includes('chat')) {
+                    addToOrder('Aloo Chat', 20);
+                } else if (input.includes('samosa')) {
+                    addToOrder('Samosa', 10);
+                } else if (input.includes('pani puri') || input.includes('golgappe')) {
+                    addToOrder('Pani Puri', 20);
+                } else if (input.includes('karela')) {
+                    addToOrder('Karela', 15);
+                } else if (input.includes('checkout') || input.includes('done') || input.includes('confirm')) {
+                    checkout();
+                } else if (input.includes('hello') || input.includes('hi') || input.includes('namaste')) {
+                    showBotMessage(`Namaste! 🙏<br><br>Kaise madad kar sakta hoon aapki?<br><br>1. 📋 Menu dekhen<br>2. 🛒 Order karein<br>3. 📍 Location jaanein`);
+                } else {
+                    showBotMessage(`Maaf kijiye, samajh nahi aaya. 😊<br><br>Kripya choose karein:<br><br>• <b>Menu</b> - Items dekhen<br>• <b>Order</b> - Order karein<br>• <b>Location</b> - Address jaanein<br>• <b>Timing</b> - Opening hours`);
+                }
+            }, 1000);
+        }
+
+        function showMenu() {
+            let menuText = `<b>🍽️ Our Special Menu:</b><br><br>`;
+            menuText += `<div class="menu-card">`;
+            
+            shopData.menu.forEach(item => {
+                menuText += `
+                    <div class="menu-item">
+                        <span class="item-name">${item.emoji} ${item.name}</span>
+                        <span class="item-price">₹${item.price}</span>
+                    </div>
+                `;
+            });
+            
+            menuText += `</div><br>Order karne ke liye item ka naam likhein (jaise "2 Aloo Chat") ya "Order" dabayein!`;
+            showBotMessage(menuText);
+        }
+
+        function showOrderOptions() {
+            showBotMessage(`🛒 <b>Order Kaise Karein:</b><br><br>Item ka naam likhein:<br>• "2 Aloo Chat"<br>• "5 Samosa"<br>• "1 Pani Puri"<br>• "3 Karela"<br><br>Ya direct WhatsApp par order karein:<br><br><button class="quick-btn" onclick="openWhatsApp()" style="background:#25D366;color:white;border:none;">📱 WhatsApp Order</button>`);
+        }
+
+        function addToOrder(itemName, price) {
+            currentOrder.push({ name: itemName, price: price });
+            const total = currentOrder.reduce((sum, item) => sum + item.price, 0);
+            
+            let orderText = `✅ <b>${itemName}</b> add ho gaya!<br><br>`;
+            orderText += `<div class="order-summary">`;
+            orderText += `<b>🛒 Aapka Order:</b><br>`;
+            currentOrder.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.name} - ₹${item.price}<br>`;
+            });
+            orderText += `<div class="total-price">Total: ₹${total}</div>`;
+            orderText += `</div><br>Aur add karna hai? Item likhein ya "Checkout" dabayein!`;
+            
+            showBotMessage(orderText);
+        }
+
+        function checkout() {
+            if (currentOrder.length === 0) {
+                showBotMessage(`⚠️ Pehle kuch order toh karein! 😊<br><br>Menu dekhne ke liye "Menu" likhein.`);
+                return;
+            }
+            
+            const total = currentOrder.reduce((sum, item) => sum + item.price, 0);
+            let orderDetails = `🛒 *New Order from Shiv Chat Center*\n\n`;
+            currentOrder.forEach((item, index) => {
+                orderDetails += `${index + 1}. ${item.name} - ₹${item.price}\n`;
+            });
+            orderDetails += `\n*Total: ₹${total}*\n\nPlease confirm my order!`;
+            
+            const encodedMessage = encodeURIComponent(orderDetails);
+            const whatsappUrl = `https://wa.me/91${shopData.phone}?text=${encodedMessage}`;
+            
+            showBotMessage(`🎉 <b>Order Ready!</b><br><br>Total: <b>₹${total}</b><br><br>Ab WhatsApp par bhej dijiye:<br><br><a href="${whatsappUrl}" target="_blank" style="text-decoration:none;"><button class="quick-btn" style="background:#25D366;color:white;border:none;padding:12px 24px;">📱 WhatsApp Par Bhejein</button></a><br><br>Ya seedha call karein: <b>7828951832</b>`);
+            
+            currentOrder = []; // Reset order
+        }
+
+        function showLocation() {
+            const mapUrl = `https://www.google.com/maps/search/?api=
